@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: MessageRegister
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5433}/${POSTGRES_DB:message_register}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+scheduler:
+  batch-size: ${SCHEDULER_BATCH_SIZE:100}
+  max-retry-attempts: ${SCHEDULER_MAX_RETRY_ATTEMPTS:3}
+  retry-delay-minutes: ${SCHEDULER_RETRY_DELAY_MINUTES:5}
+  fixed-delay: ${SCHEDULER_FIXED_DELAY:10000}
+  initial-delay: ${SCHEDULER_INITIAL_DELAY:5000}
