@@ -24,6 +24,9 @@ public class Message {
     private String email;
 
     @Column(nullable = false)
+    private UUID userId;
+
+    @Column(nullable = false)
     private Instant scheduledTime;
 
     @Column(nullable = false)
@@ -50,9 +53,10 @@ public class Message {
     public Message() {
     }
 
-    public Message(String body, String email, Instant scheduledTime, MessageStatus status) {
+    public Message(String body, String email, UUID userId, Instant scheduledTime, MessageStatus status) {
         this.body = body;
         this.email = email;
+        this.userId = userId;
         this.scheduledTime = scheduledTime;
         this.status = status;
         this.retryCount = 0;
@@ -68,6 +72,10 @@ public class Message {
 
     public String getEmail() {
         return email;
+    }
+
+    public UUID getUserId() {
+        return userId;
     }
 
     public Instant getScheduledTime() {
