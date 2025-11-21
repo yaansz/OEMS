@@ -27,16 +27,16 @@ public class UnleashLoggingFilter extends TurboFilter {
             }
 
             // Extract module name from logger name
-            String loggerName = logger.getName();
-            String moduleName = extractModuleName(loggerName);
+            String moduleName = logger.getName();
 
             // Check module-specific debug logging
             if (unleashService.isDebugLoggingEnabled(moduleName)) {
                 return FilterReply.ACCEPT;
             }
 
-            // Deny debug logs if not enabled
-            return FilterReply.DENY;
+            // We are not allowing it, so we can't say anything
+            // Another part of the software can change it.
+            return FilterReply.NEUTRAL;
         }
 
         return FilterReply.NEUTRAL;

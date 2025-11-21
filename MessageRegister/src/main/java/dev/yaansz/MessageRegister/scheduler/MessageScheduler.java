@@ -41,10 +41,12 @@ public class MessageScheduler {
     @Scheduled(fixedDelayString = "${scheduler.fixed-delay:10000}", initialDelayString = "${scheduler.initial-delay:5000}")
     @Transactional
     public void processScheduledMessages() {
-        logger.debug("Starting scheduled message processing");
-
         Instant now = Instant.now();
         List<Message> messages = messageRepository.findMessagesToProcess(now, PageRequest.of(0, batchSize));
+
+        if(messages.isEmpty()) {
+            return;
+        }
 
         logger.info("Found {} messages to process", messages.size());
 
@@ -56,8 +58,6 @@ public class MessageScheduler {
                 handleFailure(message);
             }
         }
-
-        logger.debug("Finished scheduled message processing");
     }
 
     private void processMessage(Message message) {

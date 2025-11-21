@@ -3,9 +3,9 @@ POST http://localhost:8080/v1/messages
 Content-Type: application/json
 
 {
-  "body": "email do mais brabo",
+  "body": "enviando email para o imusica",
   "userId": "26c631c3-57b5-41c7-beb9-bc44de1f53f7",
-  "email": "claro@imusica.com.br",
+  "email": "yan.machado@imusica.com.br",
   "scheduledTime": "2025-11-13T10:00:00Z"
 }
 
