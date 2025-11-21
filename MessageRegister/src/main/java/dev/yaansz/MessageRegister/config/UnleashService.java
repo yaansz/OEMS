@@ -29,7 +29,11 @@ public class UnleashService {
                 .addProperty("module", module)
                 .build();
 
-        return unleash.isEnabled("debug-logging", context, false);
+        return unleash.isEnabled("debug-logging", context);
+    }
+
+    private boolean isTeste123Enabled() {
+        return unleash.isEnabled("teste-123", false);
     }
 
     public boolean isDebugLoggingEnabledGlobally() {

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: MessageSender
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  mail:
+    host: localhost
+    port: 1025
+    from: noreply@example.com
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false

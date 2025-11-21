@@ -12,6 +12,8 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ocms-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -29,11 +31,22 @@ services:
       - "15672:15672" # Management UI
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - ocms-network
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  mailcatcher:
+    image: sj26/mailcatcher
+    container_name: mailcatcher
+    ports:
+      - "1025:1025"  # SMTP port
+      - "1080:1080"  # Web UI port
+    networks:
+      - ocms-network
 
   unleash:
     image: unleashorg/unleash-server:latest
@@ -46,6 +59,8 @@ services:
       INIT_CLIENT_API_TOKENS: "*:development.unleash-insecure-api-token"
     ports:
       - "4242:4242"
+    networks:
+      - ocms-network
     depends_on:
       unleash-postgres:
         condition: service_healthy
@@ -64,11 +79,17 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - unleash_postgres_data:/var/lib/postgresql/data
+    networks:
+      - ocms-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+networks:
+  ocms-network:
+    driver: bridge
 
 volumes:
   postgres_data:

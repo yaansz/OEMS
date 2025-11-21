@@ -1,4 +1,4 @@
-package dev.yaansz.MessageRegister.config;
+package dev.yaansz.MessageSender.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -13,24 +13,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String EXCHANGE_NAME = "messages.exchange";
-    public static final String QUEUE_NAME = "messages.queue";
-    public static final String ROUTING_KEY = "message.email";
+    // Consumer queue - receives messages from MessageRegister
+    public static final String MESSAGE_EXCHANGE = "messages.exchange";
+    public static final String MESSAGE_QUEUE = "messages.queue";
+    public static final String MESSAGE_ROUTING_KEY = "message.email";
 
-    // Success queue - receives success responses from MessageSender
+    // Producer queue - sends success responses back to MessageRegister
     public static final String SUCCESS_EXCHANGE = "messages.success.exchange";
     public static final String SUCCESS_QUEUE = "messages.success.queue";
     public static final String SUCCESS_ROUTING_KEY = "message.success";
 
     @Bean
     public TopicExchange messageExchange() {
-        return new TopicExchange(EXCHANGE_NAME, true, false);
+        return new TopicExchange(MESSAGE_EXCHANGE, true, false);
     }
 
     @Bean
     public Queue messageQueue() {
-        return QueueBuilder.durable(QUEUE_NAME)
-                .withArgument("x-dead-letter-exchange", EXCHANGE_NAME + ".dlx")
+        return QueueBuilder.durable(MESSAGE_QUEUE)
+                .withArgument("x-dead-letter-exchange", MESSAGE_EXCHANGE + ".dlx")
                 .build();
     }
 
@@ -38,7 +39,7 @@ public class RabbitMQConfig {
     public Binding messageBinding(Queue messageQueue, TopicExchange messageExchange) {
         return BindingBuilder.bind(messageQueue)
                 .to(messageExchange)
-                .with(ROUTING_KEY);
+                .with(MESSAGE_ROUTING_KEY);
     }
 
     @Bean
