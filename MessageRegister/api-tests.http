@@ -3,34 +3,14 @@ POST http://localhost:8080/v1/messages
 Content-Type: application/json
 
 {
-  "body": "enviando email para o imusica",
+  "body": "ENVIO LOGANDO DEBUG",
   "userId": "26c631c3-57b5-41c7-beb9-bc44de1f53f7",
-  "email": "yan.machado@imusica.com.br",
+  "email": "yan.figueiredo@softawii.com.br",
   "scheduledTime": "2025-11-13T10:00:00Z"
 }
 
-### Create a message scheduled for now (immediate processing)
-POST http://localhost:8080/v1/messages
-Content-Type: application/json
-
-{
-  "body": "Urgent message - process immediately!",
-  "email": "urgent@example.com",
-  "scheduledTime": "2025-11-13T00:00:00Z"
-}
-
-### Create a message scheduled for future
-POST http://localhost:8080/v1/messages
-Content-Type: application/json
-
-{
-  "body": "This message is scheduled for tomorrow.",
-  "email": "future@example.com",
-  "scheduledTime": "2025-11-14T15:30:00Z"
-}
-
 ### Get message by ID (replace with actual ID from create response)
-GET http://localhost:8080/v1/messages/42a85a92-1942-4095-a964-afae4b58760c
+GET http://localhost:8080/v1/messages/6c95becc-e409-4b3e-9154-28b21c904877
 
 ### Get all messages (default pagination)
 GET http://localhost:8080/v1/messages
@@ -40,44 +20,3 @@ GET http://localhost:8080/v1/messages?page=0&size=10
 
 ### Get all messages (page 1, size 10)
 GET http://localhost:8080/v1/messages?page=1&size=10
-
-### Get all messages (sorted by scheduledTime descending)
-GET http://localhost:8080/v1/messages?sort=scheduledTime,desc
-
-### Validation test - invalid email
-POST http://localhost:8080/v1/messages
-Content-Type: application/json
-
-{
-  "body": "Test message",
-  "email": "invalid-email",
-  "scheduledTime": "2025-11-13T10:00:00Z"
-}
-
-### Validation test - empty body
-POST http://localhost:8080/v1/messages
-Content-Type: application/json
-
-{
-  "body": "",
-  "email": "test@example.com",
-  "scheduledTime": "2025-11-13T10:00:00Z"
-}
-
-### Validation test - body too long (over 1000 chars)
-POST http://localhost:8080/v1/messages
-Content-Type: application/json
-
-{
-  "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  "email": "test@example.com",
-  "scheduledTime": "2025-11-13T10:00:00Z"
-}
-
-### Validation test - missing required fields
-POST http://localhost:8080/v1/messages
-Content-Type: application/json
-
-{
-  "body": "Test message"
-}
